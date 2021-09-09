@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-function EditTask({modal, toggle, saveTask}) {
+function EditTask({modal, toggle, saveTask, task, updateTask}) {
 
     //used for storing the task name
     const [taskName, setTaskName] = useState('');
@@ -21,16 +21,29 @@ function EditTask({modal, toggle, saveTask}) {
         }
     }
 
-    const handleSave = () =>{
-        let taskObject = {};
-        taskObject["name"] = taskName;
-        taskObject["taskDesc"] = taskDesc;
-        saveTask(taskObject)
+    useEffect(() => {
+        setTaskName(task.name);
+        setTaskDesc(task.taskDesc);
+    }, [])
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        let initObject = {}
+        initObject['name'] = taskName
+        initObject['taskDesc'] = taskDesc
+        updateTask(initObject);
     }
+
+    // const handleSave = () =>{
+    //     let taskObject = {};
+    //     taskObject["name"] = taskName;
+    //     taskObject["taskDesc"] = taskDesc;
+    //     saveTask(taskObject)
+    // }
 
     return (
         <Modal isOpen={modal} toggle={toggle} >
-            <ModalHeader toggle={toggle}>Create Task</ModalHeader>
+            <ModalHeader toggle={toggle}>Edit Task</ModalHeader>
 
             <ModalBody>
                 <form>
@@ -46,7 +59,7 @@ function EditTask({modal, toggle, saveTask}) {
             </ModalBody>
 
             <ModalFooter>
-                <Button color="primary" onClick={handleSave}>Create</Button>{' '}
+                <Button color="primary" onClick={handleUpdate}>Save</Button>{' '}
                 <Button color="secondary" onClick={toggle}>Cancel</Button>
             </ModalFooter>
       </Modal>

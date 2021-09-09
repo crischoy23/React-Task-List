@@ -37,6 +37,14 @@ function TodoList() {
         setTaskList(initList)
         window.location.reload()
     }
+
+   const updateListArray = (obj, index) =>{
+       let initList = taskList
+       localStorage.setItem("taskList", JSON.stringify(initList))
+       initList[index] = obj
+       setTaskList(initList)
+       window.location.reload()
+   }
     
 
     return (
@@ -47,7 +55,7 @@ function TodoList() {
         </div>
         <div className="task-container">
             {taskList && taskList.map((task, index) =>
-            <TaskCard task={task} index={index} deleteTask={deleteTask}/> )}
+            <TaskCard task={task} index={index} deleteTask={deleteTask} updateListArray={updateListArray} saveTask={saveTask}/> )}
         </div>
         <CreateTask modal={modal} toggle={toggle} saveTask={saveTask}/>
         </>

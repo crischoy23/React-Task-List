@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import '../App.css';
 import EditTask from '../modals/EditTask';
 
-const TaskCard = ({task, index, deleteTask}) => {
+const TaskCard = ({task, index, deleteTask, updateListArray, saveTask}) => {
 
     const [modal, setModal] = useState(false);
 
@@ -33,9 +33,9 @@ const TaskCard = ({task, index, deleteTask}) => {
         setModal(!modal)
     }
 
-    // const updateTask = () => {
-
-    // }
+    const updateTask = (obj) => {
+        updateListArray(obj, index)
+    }
 
     const handleDelete = () => {
         deleteTask(index)
@@ -53,7 +53,7 @@ const TaskCard = ({task, index, deleteTask}) => {
                     <i class="fas fa-trash-alt" style = {{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick={handleDelete} ></i>
                 </div>
         </div>
-        <EditTask modal = {modal} toggle = {toggle} />
+        <EditTask modal = {modal} toggle = {toggle} task={task} updateTask={updateTask} saveTask={saveTask}/>
         </div>
     )
 }
